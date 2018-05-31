@@ -48,13 +48,30 @@ class FoodDelivery: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "RE", for: indexPath)
+     let cell = tableView.dequeueReusableCell(withIdentifier: "RE", for: indexPath) as! DetailTableViewCell
         
-     cell.textLabel?.text = foodStoreNames[indexPath.row]
-     cell.detailTextLabel?.text = foodStoreAddress[indexPath.row]
-     cell.imageView?.image = UIImage(named : foodStoreImages[indexPath.row])
-        
+        cell.detailNameLabel.text = foodStoreNames[indexPath.row]
+        cell.detailAddressLabel.text = foodStoreAddress[indexPath.row]
+        cell.detailTypeLabel.text = foodStoreTel[indexPath.row]
+        cell.detailImageView.image = UIImage(named: foodStoreImages[indexPath.row])
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+   
+        if segue.identifier == "detail" {
+            if let indexPath = tableView.indexPathForSelectedRow{
+                let destinationController = segue.destination as! detailViewController
+                // 이름 넘기기
+                destinationController.cellName = foodStoreNames[indexPath.row]
+                destinationController.cellAddress=foodStoreAddress[indexPath.row]
+                destinationController.cellImage=foodStoreImages[indexPath.row]
+            }
+            
+            
+        }
+        
+        
     }
     
 
